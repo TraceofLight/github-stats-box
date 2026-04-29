@@ -8,8 +8,6 @@ on:
 jobs:
     run:
         runs-on: ubuntu-latest
-        permissions:
-            contents: write
         steps:
             - uses: actions/setup-node@v4
               with:
@@ -22,4 +20,10 @@ jobs:
                   GIST_ID: 02ee63d4330de0fb287af177c2b71dcc # The ID portion from your gist url
                   ALL_COMMITS: true # If `true` it will count all commits, if `false` it will count your last year commits
                   K_FORMAT: false # If `true`, large numbers will be formatted with a "k", for example "1.5k"
-            - uses: gautamkrishnar/keepalive-workflow@v2
+    keepalive:
+        if: github.event_name == 'schedule'
+        runs-on: ubuntu-latest
+        permissions:
+            actions: write
+        steps:
+            - uses: liskin/gh-workflow-keepalive@v1
